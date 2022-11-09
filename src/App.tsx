@@ -1,25 +1,61 @@
 import React from 'react';
 import './App.css';
-import {Todolist} from "./Todolist";
+import Todolist from './Todolist'
+
+export type TaskType = {
+    id: number,
+    title: string,
+    isDone: boolean,
+}
 
 function App() {
-    const tasks1 = [
-        { id: 1, title: "HTML&CSS", isDone: true },
-        { id: 2, title: "JS", isDone: true },
-        { id: 3, title: "ReactJS", isDone: false }
+    const todolistTitle_1: string = 'What to learn';
+    const todolistTitle_2: string = 'What to buy';
+
+    const tasks_1: Array<TaskType> = [
+        {
+            id: 1,
+            title: "HTML&CSS",
+            isDone: true,
+        },
+        {
+            id: 2,
+            title: "Js",
+            isDone: true,
+        },
+        {
+            id: 3,
+            title: "React",
+            isDone: false,
+        },
     ]
-    const tasks2 = [
-        { id: 1, title: "Hello world", isDone: true },
-        { id: 2, title: "I am Happy", isDone: false },
-        { id: 3, title: "Yo", isDone: false }
+
+    const tasks_2: Array<TaskType> = [
+        {
+            id: 4,
+            title: "Bread",
+            isDone: true,
+        },
+        {
+            id: 5,
+            title: "Coca-cola",
+            isDone: true,
+        },
+        {
+            id: 6,
+            title: "Snikers",
+            isDone: false,
+        },
     ]
-    return(
+
+
+    return (
         <div className='App'>
-            <Todolist title = 'What to learn' tasks={tasks1}/>
-            <Todolist title = 'Song' tasks={tasks2}/>
+            <Todolist title={todolistTitle_1} tasks={tasks_1}/>
+            <Todolist title={todolistTitle_2} tasks={tasks_2}/>
         </div>
     )
 }
 
 
-export default App;
+export default App
