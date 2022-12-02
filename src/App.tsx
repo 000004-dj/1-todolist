@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import Todolist from './Todolist'
+import Todolist from './Components/Todolist'
 // import {constants} from "fs";
 import {v1} from "uuid"
 
@@ -36,6 +36,13 @@ function App() {
 
     const addTask = (title: string) => setTasks([{id: v1(), title, isDone: false}, ...tasks])
 
+    const changeTaskStatus = (taskId: any, isDone: boolean) =>
+        setTasks(tasks.map(t => t.id === taskId ? {
+            ...t,
+            isDone: isDone
+        } : t))
+
+
     const [filter, setFilter] = useState<FilterValuesType>("all")
 
     const changeTodolistFilter = (nextFilterValue: FilterValuesType) => setFilter(nextFilterValue)
@@ -56,8 +63,17 @@ function App() {
 
     return (
         <div className='App'>
-            <Todolist title={todolistTitle} tasks={filteredTasks} updatedTasks={removeTask}
-                      changeTodolistFilter={changeTodolistFilter} addTask={addTask}/>
+
+            <Todolist
+                title={todolistTitle}
+                tasks={filteredTasks}
+                updatedTasks={removeTask}
+                changeTodolistFilter={changeTodolistFilter}
+                addTask={addTask}
+                changeTaskStatus={changeTaskStatus}
+                filter={filter}
+            />
+
             {/*<Todolist title={todolistTitle_2} tasks={tasks_2}/>*/}
         </div>
     )
