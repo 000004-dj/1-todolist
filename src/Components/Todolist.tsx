@@ -60,7 +60,6 @@ function Todolist(props: TodolistPropsType) {
         } else {
             setError(true)
         }
-
         setTitle("")
     }
 
