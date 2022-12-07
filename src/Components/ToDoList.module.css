@@ -84,3 +84,18 @@ h3 {
 .inputNoErr {
     border: solid 1px black;
 }
+
+.buttonDeleteTodolist {
+    display: inline-block;
+}
+
+.titleOfTodoList {
+    display: grid;
+    grid-template-columns: 2.5fr 0.5fr;
+}
+
+.titleOfTodoList button {
+    width: 25px;
+    height: 25px;
+    margin: auto 0px;
+}

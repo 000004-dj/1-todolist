@@ -1,16 +1,17 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {FilterValuesType, TaskType} from "../App";
+import {FilterValuesType, TaskType, TodoListType} from "../App";
 import s from "./ToDoList.module.css"
 
 type TodolistPropsType = {
     title: string
     tasks: Array<TaskType>
-    updatedTasks: (TaskId: string) => void
-    changeTodolistFilter: (changeTodolistFilter: FilterValuesType) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (taskId: string, checked: boolean) => void
+    updatedTasks: (TaskId: string, todoListId: string) => void
+    changeTodolistFilter: (changeTodolistFilter: FilterValuesType, todoListId: string) => void
+    addTask: (title: string, todoListId: string) => void
+    changeTaskStatus: (taskId: string, checked: boolean, todoListId: string) => void
     filter: FilterValuesType
-
+    removeTodoList: (todoListID: string) => void
+    todoListId: string
 }
 
 function Todolist(props: TodolistPropsType) {
@@ -21,7 +22,7 @@ function Todolist(props: TodolistPropsType) {
 
     const getTasksElementItem = (task: TaskType) => {
 
-        const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked)
+        const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked, props.todoListId)
 
         return (
             <li key={task.id}>
@@ -39,7 +40,7 @@ function Todolist(props: TodolistPropsType) {
 
                 <button
                     onClick={() => {
-                        props.updatedTasks(task.id)
+                        props.updatedTasks(task.id, props.todoListId)
                     }}
                     className={s.buttonCross}
 
@@ -55,7 +56,7 @@ function Todolist(props: TodolistPropsType) {
     const addTask = () => {
         const trimmedTitle = title.trim()
         if (trimmedTitle) {
-            props.addTask(title)
+            props.addTask(trimmedTitle, props.todoListId)
         } else {
             setError(true)
         }
@@ -74,8 +75,8 @@ function Todolist(props: TodolistPropsType) {
         setTitle(e.currentTarget.value)
     }
 
-    const getOnClickHandlerCreator = (filter: FilterValuesType) => () => props.changeTodolistFilter(filter)
-
+    const getOnClickHandlerCreator = (filter: FilterValuesType) => () => props.changeTodolistFilter(filter, props.todoListId)
+    const removeTodoList = () => props.removeTodoList(props.todoListId)
     const haveTasks = () => props.tasks.length ? props.tasks.map(getTasksElementItem) : "Lets to do nothing!"
 
     const errorClassForInput = (err: boolean) => !err ? "s.inputNoErr" : "input-error"
@@ -84,7 +85,11 @@ function Todolist(props: TodolistPropsType) {
     return (
         <div className="App">
             <div className={s.toDoListsParent}>
-                <h3>{props.title}</h3>
+
+                <div className={s.titleOfTodoList}>
+                    <h3>{props.title}</h3>
+                    <button onClick={removeTodoList}>x</button>
+                </div>
                 <div className={s.inputWithButton}>
 
                     <input
