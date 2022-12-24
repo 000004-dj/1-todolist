@@ -3,6 +3,7 @@ import {FilterValuesType, TaskType} from "../App";
 import s from "./ToDoList.module.css"
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import {Button} from "@mui/material";
 
 type TodolistPropsType = {
     title: string
@@ -44,6 +45,7 @@ function Todolist(props: TodolistPropsType) {
                 </span>
 
                 <button
+
                     onClick={() => {
                         props.updatedTasks(task.id, props.todoListId)
                     }}
@@ -76,23 +78,35 @@ function Todolist(props: TodolistPropsType) {
                     {haveTasks()}
                 </ul>
                 <div className={s.buttons}>
-                    <button
+                    <Button
+                        size={"small"}
+                        color={props.filter === "all" ? "secondary" : "primary"}
+                        variant={"contained"}
                         onClick={getOnClickHandlerCreator("all")}
-                        className={props.filter === "all" ? "btn-active" : s.buttonAll}>
+                        // className={props.filter === "all" ? "btn-active" : s.buttonAll}
+                    >
                         All
-                    </button>
+                    </Button>
 
-                    <button
+                    <Button
+                        size={"small"}
+                        color={props.filter === "active" ? "secondary" : "primary"}
+                        variant={"contained"}
                         onClick={getOnClickHandlerCreator("active")}
-                        className={props.filter === "active" ? "btn-active" : s.buttonActive}>
+                        // className={props.filter === "active" ? "btn-active" : s.buttonActive}
+                    >
                         Active
-                    </button>
+                    </Button>
 
-                    <button
+                    <Button
+                        size={"small"}
+                        color={props.filter === "completed" ? "secondary" : "primary"}
+                        variant={"contained"}
                         onClick={getOnClickHandlerCreator("completed")}
-                        className={props.filter === "completed" ? "btn-active" : s.buttonCompleted}>
+                        // className={props.filter === "completed" ? "btn-active" : s.buttonCompleted}
+                    >
                         Completed
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>
