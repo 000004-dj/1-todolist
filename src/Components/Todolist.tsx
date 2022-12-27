@@ -3,7 +3,9 @@ import {FilterValuesType, TaskType} from "../App";
 import s from "./ToDoList.module.css"
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button} from "@mui/material";
+import {Button, ButtonGroup, Checkbox, IconButton, List, ListItem, Typography} from "@mui/material";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
 
 type TodolistPropsType = {
     title: string
@@ -20,42 +22,53 @@ type TodolistPropsType = {
 }
 
 function Todolist(props: TodolistPropsType) {
-
     const addNewTask = (title: string) => {
         props.addTask(title, props.todoListId)
     }
     const haveTasks = () => props.tasks.length ? props.tasks.map(getTasksElementItem) : "Lets to do nothing!"
+
+    //mapped tasks with JSX
     const getTasksElementItem = (task: TaskType) => {
         const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked, props.todoListId)
         const changeTaskTitle = (title: string) => {
             props.changeTaskTitle(task.id, title, props.todoListId)
         }
         return (
-            <li key={task.id}>
+            <ListItem
+                sx={{p: "0px"}}
+                key={task.id}>
 
-                <input
-                    type="checkbox"
+                <Checkbox
+                    // type="checkbox"
                     checked={task.isDone}
                     onChange={changeTaskStatus}
                 />
 
                 <span
-                    className={task.isDone ? "taskDone" : "task"}>
+                    className={task.isDone ? "taskDone" : "task"}
+                >
                     <EditableSpan title={task.title} changeTitle={changeTaskTitle}/>
                 </span>
-
-                <button
-
+                {/*<button*/}
+                {/*    onClick={() => {*/}
+                {/*        props.updatedTasks(task.id, props.todoListId)*/}
+                {/*    }}*/}
+                {/*    className={s.buttonCross}*/}
+                {/*>*/}
+                {/*    X*/}
+                {/*</button>*/}
+                <IconButton
+                    color={"error"}
+                    sx={{p: "0px"}}
+                    size={"small"}
                     onClick={() => {
                         props.updatedTasks(task.id, props.todoListId)
                     }}
-                    className={s.buttonCross}
-
                 >
-                    X
-                </button>
+                    <DeleteForeverIcon/>
+                </IconButton>
 
-            </li>
+            </ListItem>
         )
     }
 
@@ -65,23 +78,40 @@ function Todolist(props: TodolistPropsType) {
     const changeTodoListTitle = (title: string) => props.changeTodoListTitle(title, props.todoListId)
 
     return (
-        <div className="App">
+
+        <div className="Appp">
             <div className={s.toDoListsParent}>
 
                 <div className={s.titleOfTodoList}>
-                    <h3><EditableSpan title={props.title} changeTitle={changeTodoListTitle}/></h3>
-                    <button onClick={removeTodoList}>x</button>
+                    <Typography variant={"h5"} align={"center"}><EditableSpan title={props.title}
+                                                                              changeTitle={changeTodoListTitle}/>
+                        <IconButton onClick={removeTodoList} size={"small"}>
+                            <DisabledByDefaultIcon/>
+                        </IconButton>
+                    </Typography>
+                    {/*<button onClick={removeTodoList}>x</button>*/}
+
                 </div>
                 <AddItemForm addItem={addNewTask}/>
 
-                <ul className={s.checked}>
+                <List
+                    sx={{width: '100%', maxWidth: 360}}
+                    className={s.checked}>
+
                     {haveTasks()}
-                </ul>
-                <div className={s.buttons}>
+                </List>
+                <ButtonGroup
+                    disableElevation
+
+                    fullWidth
+                    className={s.buttons}
+
+                    size={"small"}
+                    color={props.filter === "all" ? "secondary" : "primary"}
+                    variant={"contained"}>
+
                     <Button
-                        size={"small"}
-                        color={props.filter === "all" ? "secondary" : "primary"}
-                        variant={"contained"}
+                        sx={{mr: "10px", p: "2px", fontSize: "10px"}}
                         onClick={getOnClickHandlerCreator("all")}
                         // className={props.filter === "all" ? "btn-active" : s.buttonAll}
                     >
@@ -89,9 +119,7 @@ function Todolist(props: TodolistPropsType) {
                     </Button>
 
                     <Button
-                        size={"small"}
-                        color={props.filter === "active" ? "secondary" : "primary"}
-                        variant={"contained"}
+                        sx={{mr: "10px", p: "2px", fontSize: "10px"}}
                         onClick={getOnClickHandlerCreator("active")}
                         // className={props.filter === "active" ? "btn-active" : s.buttonActive}
                     >
@@ -99,15 +127,13 @@ function Todolist(props: TodolistPropsType) {
                     </Button>
 
                     <Button
-                        size={"small"}
-                        color={props.filter === "completed" ? "secondary" : "primary"}
-                        variant={"contained"}
+                        sx={{mr: "10px", p: "2px", fontSize: "10px"}}
                         onClick={getOnClickHandlerCreator("completed")}
                         // className={props.filter === "completed" ? "btn-active" : s.buttonCompleted}
                     >
                         Completed
                     </Button>
-                </div>
+                </ButtonGroup>
             </div>
         </div>
     )

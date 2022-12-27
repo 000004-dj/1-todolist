@@ -1,7 +1,4 @@
 .App {
-    padding: 30px;
-    display: flex;
-    margin: auto;
 }
 
 .App > div {
@@ -22,6 +19,7 @@
 }
 
 .task {
+
 
 }
 
