@@ -1,8 +1,8 @@
 import React, {ChangeEvent} from "react";
-import {FilterValuesType, TaskType} from "../App";
+import {FilterValuesType, TaskType} from "../../App";
 import s from "./ToDoList.module.css"
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
+import {AddItemForm} from "../AddItemForm/AddItemForm";
+import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {Button, ButtonGroup, Checkbox, IconButton, List, ListItem, Typography} from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
