@@ -6,13 +6,14 @@ type FilterValuesType = "all" | "active" | "completed"
 
 //Actions Types:
 type ActionType = RemoveTodoListAT | AddNewTodoListAT | ChangeTodoListFilterAT | ChangeTodoListTitleAT
-type RemoveTodoListAT = {
+export type RemoveTodoListAT = {
     type: typeof REMOVE_TODOLIST
     id: string
 }
-type AddNewTodoListAT = {
+export type AddNewTodoListAT = {
     type: typeof ADD_NEW_TODOLIST
     text: string
+    todoListId: string
 }
 type ChangeTodoListFilterAT = {
     type: typeof CHANGE_TODOLIST_FILTER
@@ -40,7 +41,7 @@ export const todolistReducer = (todoLists: Array<TodoListType>, action: ActionTy
             return [
                 ...todoLists,
                 {
-                    id: v1(),
+                    id: action.todoListId,
                     filter: "all",
                     title: action.text,
                 }
@@ -65,7 +66,8 @@ export const RemoveTodoListAC = (id: string) => {
 export const AddNewTodoListAC = (text: string) => {
     return {
         type: ADD_NEW_TODOLIST,
-        text: text
+        text: text,
+        todoListId: v1()
     }
 }
 export const ChangeTodoListFilterAC = (nextFilterValue: FilterValuesType, todoListId: string) => {
