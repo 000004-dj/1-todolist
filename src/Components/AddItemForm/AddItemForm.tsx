@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
 import s from "../ToDoList/ToDoList.module.css";
 import {Button, TextField} from "@mui/material";
 import AddBoxIcon from '@mui/icons-material/AddBox';
@@ -8,7 +8,8 @@ type AddItemFormPropsType = {
 
 }
 
-export const AddItemForm = (props: AddItemFormPropsType) => {
+export const AddItemForm = memo((props: AddItemFormPropsType) => {
+
     const [title, setTitle] = useState<string>("")
     const [error, setError] = useState<boolean>(false)
 
@@ -64,4 +65,4 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
 
         </div>
     )
-}
+})
