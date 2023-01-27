@@ -22,9 +22,9 @@ export const TaskWithRedux = memo(({
     const dispatch = useDispatch()
 
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusAC(id, e.currentTarget.checked, todoListId))
-    const onTitleChangeHandler = (title: string) => dispatch(changeTaskTitleAC(id, title, todoListId))
-    const updatedTasks = (id: string) => dispatch(removeTaskAC(id, todoListId))
+    const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusAC(id, e.currentTarget.checked, todoListId))
+    const changeTaskTitleHandler = (title: string) => dispatch(changeTaskTitleAC(id, title, todoListId))
+    const removeTaskHandler = (id: string) => dispatch(removeTaskAC(id, todoListId))
 
     return (
         <ListItem
@@ -34,20 +34,20 @@ export const TaskWithRedux = memo(({
             <Checkbox
                 // type="checkbox"
                 checked={isDone}
-                onChange={onChangeHandler}
+                onChange={changeTaskStatusHandler}
             />
 
             <span
                 className={isDone ? "taskDone" : "task"}
             >
-                    <EditableSpan title={title} changeTitle={onTitleChangeHandler}/>
+                    <EditableSpan title={title} changeTitle={changeTaskTitleHandler}/>
                 </span>
             <IconButton
                 color={"error"}
                 sx={{p: "0px"}}
                 size={"small"}
                 onClick={() => {
-                    updatedTasks(id)
+                    removeTaskHandler(id)
                 }}
             >
                 <DeleteForeverIcon/>
